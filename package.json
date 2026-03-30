@@ -1,8 +1,7 @@
 {
   "name": "imagekit-vercel-auth",
   "private": true,
-  "type": "module",
   "dependencies": {
-    "@imagekit/nodejs": "^5.0.0"
+    "imagekit": "^6.0.0"
   }
 }
