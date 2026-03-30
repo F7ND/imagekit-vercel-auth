@@ -1,18 +1,19 @@
-import ImageKit from "@imagekit/nodejs";
+const ImageKit = require("imagekit");
 
-const client = new ImageKit({
-  privateKey: process.env.IMAGEKIT_PRIVATE_KEY
+const imagekit = new ImageKit({
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT
 });
 
-export default function handler(req, res) {
+module.exports = (req, res) => {
   try {
-    const { token, expire, signature } =
-      client.helper.getAuthenticationParameters();
+    const result = imagekit.getAuthenticationParameters();
 
     res.status(200).json({
-      token,
-      expire,
-      signature,
+      token: result.token,
+      expire: result.expire,
+      signature: result.signature,
       publicKey: process.env.IMAGEKIT_PUBLIC_KEY
     });
   } catch (error) {
@@ -20,4 +21,4 @@ export default function handler(req, res) {
       error: "Gagal membuat auth parameters"
     });
   }
-}
+};
